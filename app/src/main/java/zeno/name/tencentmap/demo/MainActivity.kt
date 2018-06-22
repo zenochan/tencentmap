@@ -2,8 +2,6 @@ package zeno.name.tencentmap.demo
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
-import com.tencent.map.geolocation.TencentLocation
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_main.*
 import name.zeno.ktrxpermission.ZPermission
@@ -23,7 +21,7 @@ class MainActivity : AppCompatActivity() {
           ZPermission.READ_PHONE_STATE
       ).flatMap {
         if (it) ILocation.instance(this).requestLocation()
-        else Observable.error<TencentLocation>(IllegalStateException("没有权限"))
+        else Observable.error(IllegalStateException("没有权限"))
       }.subscribe({
         tv_content.text = "${tv_content.text}\nnext: ${it.latitude},${it.longitude}"
       }, {
